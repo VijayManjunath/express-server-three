@@ -20,7 +20,6 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + path.extname(file.originalname));
     }
 });
-const upload = multer({ storage });
 
 // Healthcheck endpoint
 app.get('/', (req, res) => {
