@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 
 export const app = express();
-const multer = require('multer');
 
 app.use(cors({ origin: true }));
 
