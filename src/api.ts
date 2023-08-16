@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 const multer = require('multer');
+const path = require('path');
+
 export const app = express();
 
 app.use(cors({ origin: true }));
@@ -18,6 +20,20 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage });
+
+app.post('/upload', upload.array('uploads', 10), (req, res) => {
+    try {
+        // Handle uploaded files here (e.g., save to database, process, etc.)
+        console.log('Uploaded files:', req.files);
+
+        // Send a success response
+        res.status(200).json({ message: 'Files uploaded successfully' });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred while processing the files' });
     }
 });
 
